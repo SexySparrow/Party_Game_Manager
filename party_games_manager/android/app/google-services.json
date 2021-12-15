@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "946458631850",
+    "project_id": "partygamemanager",
+    "storage_bucket": "partygamemanager.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:946458631850:android:871dd069ae160c3b28fad3",
+        "android_client_info": {
+          "package_name": "com.example.party_games_manager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "946458631850-2qiec7dhfmnagb0team67p87c97pm3ip.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCi-vUxJNtuvFGfkikz1JzviYl1bysjkUw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "946458631850-2qiec7dhfmnagb0team67p87c97pm3ip.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
