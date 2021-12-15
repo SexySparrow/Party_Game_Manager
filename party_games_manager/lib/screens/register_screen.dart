@@ -218,11 +218,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   text: TextSpan(
                     children: [
                       const TextSpan(
-                        text: "Deja ai cont? Autentifica-te ",
+                        text: "Already registered? Login ",
                         style: TextStyle(color: Colors.black),
                       ),
                       TextSpan(
-                        text: "aici",
+                        text: "here",
                         style: const TextStyle(
                           color: Colors.blue,
                         ),
