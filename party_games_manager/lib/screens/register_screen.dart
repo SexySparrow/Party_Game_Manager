@@ -1,10 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:party_games_manager/controllers/auth_controller.dart';
-import 'package:party_games_manager/models/user_model.dart';
 import 'package:party_games_manager/screens/login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -15,8 +11,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final _auth = FirebaseAuth.instance;
-
   final _formKey = GlobalKey<FormState>();
 
   final nameController = TextEditingController();
