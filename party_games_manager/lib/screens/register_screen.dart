@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:party_games_manager/controllers/auth_controller.dart';
 import 'package:party_games_manager/models/user_model.dart';
 import 'package:party_games_manager/screens/login_screen.dart';
 
@@ -195,7 +196,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     color: Colors.blueAccent,
                     child: MaterialButton(
                       onPressed: () {
-                        signUp(emailController.text, passwordController.text);
+                        AuthController.instance.register(emailController.text,
+                            passwordController.text, nameController.text);
                       },
                       padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
                       minWidth: 300,
@@ -242,35 +244,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
-  }
-
-  void signUp(String email, String password) async {
-    if (_formKey.currentState!.validate()) {
-      await _auth
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) => postDetailsToFirestore())
-          .catchError((e) {
-        Fluttertoast.showToast(msg: e!.message);
-      });
-    }
-  }
-
-  postDetailsToFirestore() async {
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? user = _auth.currentUser;
-
-    UserModel userModel = UserModel();
-    userModel.uid = user!.uid;
-    userModel.email = user.email;
-    userModel.name = nameController.text;
-
-    await firebaseFirestore
-        .collection("Users")
-        .doc(user.uid)
-        .set(userModel.toMap());
-    Fluttertoast.showToast(msg: "Account created successfully");
-
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const LoginScreen()));
   }
 }

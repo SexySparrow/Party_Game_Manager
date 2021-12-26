@@ -1,9 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:party_games_manager/models/user_model.dart';
-import 'package:party_games_manager/screens/home_screen.dart';
+import 'package:get/get.dart';
+import 'package:party_games_manager/controllers/auth_controller.dart';
 import 'package:party_games_manager/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -15,13 +12,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _auth = FirebaseAuth.instance;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  String? errorMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +126,8 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Colors.blueAccent,
               child: MaterialButton(
                 onPressed: () {
-                  signIn(emailController.text, passwordController.text);
+                  AuthController.instance
+                      .login(emailController.text, passwordController.text);
                 },
                 padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
                 minWidth: 300,
@@ -156,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Colors.blueAccent,
               child: MaterialButton(
                 onPressed: () {
-                  signInAnonymous();
+                  AuthController.instance.loginAnonymous();
                 },
                 padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
                 minWidth: 300,
@@ -188,8 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const RegisterScreen()));
+                        Get.to(() => const RegisterScreen());
                       },
                   ),
                 ],
@@ -199,68 +193,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> signInAnonymous() async {
-    await _auth.signInAnonymously();
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? user = _auth.currentUser;
-
-    UserModel userModel = UserModel();
-    userModel.uid = user!.uid;
-    userModel.email = "";
-    userModel.name = "";
-
-    await firebaseFirestore
-        .collection("Users")
-        .doc(user.uid)
-        .set(userModel.toMap());
-    Fluttertoast.showToast(msg: "Logged in successfuly as Guest");
-
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const HomeScreen()));
-  }
-
-  Future<void> signIn(String email, String password) async {
-    final formState = _formKey.currentState;
-
-    if (formState!.validate()) {
-      formState.save();
-
-      try {
-        await _auth
-            .signInWithEmailAndPassword(email: email, password: password)
-            .then((vallue) {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const HomeScreen()));
-          Fluttertoast.showToast(msg: "Login Successful");
-        });
-      } on FirebaseAuthException catch (error) {
-        switch (error.code) {
-          case "invalid-email":
-            errorMessage = "Your email address appears to be malformed.";
-            break;
-          case "wrong-password":
-            errorMessage = "Your password is wrong.";
-            break;
-          case "user-not-found":
-            errorMessage = "User with this email doesn't exist.";
-            break;
-          case "user-disabled":
-            errorMessage = "User with this email has been disabled.";
-            break;
-          case "too-many-requests":
-            errorMessage = "Too many requests";
-            break;
-          case "operation-not-allowed":
-            errorMessage = "Signing in with Email and Password is not enabled.";
-            break;
-
-          default:
-            errorMessage = "An undefined Error happened.";
-        }
-        Fluttertoast.showToast(msg: errorMessage!);
-      }
-    }
   }
 }
