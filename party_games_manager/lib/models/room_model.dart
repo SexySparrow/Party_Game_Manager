@@ -1,38 +1,41 @@
-class UserModel {
-  String name;
-  String adminName;
-  int nrPlayers;
-  int nrMaxPlayers;
-  String game;
-  String state;
-  Map<String, int> players;
-  int nrSpectators;
-  String uid;
+class RoomModel {
+  String? name;
+  String? adminName;
+  int? nrPlayers;
+  int? nrMaxPlayers;
+  bool? isPrivate;
+  String? password;
+  String? game;
+  String? state;
+  Map<String, dynamic>? players;
+  int? nrSpectators;
 
-  UserModel({
-    required this.name,
-    required this.adminName,
-    required this.nrPlayers,
-    required this.nrMaxPlayers,
-    required this.game,
-    required this.state,
-    required this.players,
-    required this.nrSpectators,
-    required this.uid,
+  RoomModel({
+    this.name,
+    this.adminName,
+    this.nrPlayers,
+    this.nrMaxPlayers,
+    this.isPrivate,
+    this.password,
+    this.game,
+    this.state,
+    this.players,
+    this.nrSpectators,
   });
 
   //Data fetched from firestore
-  factory UserModel.fromMap(map) {
-    return UserModel(
+  factory RoomModel.fromMap(map) {
+    return RoomModel(
       name: map["Name"],
       adminName: map["AdminName"],
       nrPlayers: map["NrPlayers"],
       nrMaxPlayers: map["MaxPlayers"],
+      isPrivate: map["IsPrivate"],
+      password: map["Password"],
       game: map["Game"],
       state: map["State"],
       players: map["Players"],
       nrSpectators: map["NrSpectators"],
-      uid: map["UID"],
     );
   }
 
@@ -43,11 +46,12 @@ class UserModel {
       "AdminName": adminName,
       "NrPlayers": nrPlayers,
       "MaxPlayers": nrMaxPlayers,
+      "IsPrivate": isPrivate,
+      "Password": password,
       "Game": game,
       "State": state,
       "Players": players,
       "NrSpectators": nrSpectators,
-      "UID": uid,
     };
   }
 }
