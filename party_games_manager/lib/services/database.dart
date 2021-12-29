@@ -79,14 +79,21 @@ class Database {
 
   Future<List<RoomModel>> getRooms(String filter) async {
     try {
-      final query = await _firestore
-          .collection("Rooms")
-          .where("Name", isGreaterThanOrEqualTo: filter)
-          .get();
-
-      final rooms =
-          query.docs.map((doc) => RoomModel.fromMap(doc.data())).toList();
-      return rooms;
+      if (filter == "") {
+        final query = await _firestore.collection("Rooms").get();
+        final rooms =
+            query.docs.map((doc) => RoomModel.fromMap(doc.data())).toList();
+        return rooms;
+      } else {
+        final query = await _firestore
+            .collection("Rooms")
+            .where("Name", isGreaterThanOrEqualTo: filter)
+            .where("Name", isLessThanOrEqualTo: filter + '\uf8ff')
+            .get();
+        final rooms =
+            query.docs.map((doc) => RoomModel.fromMap(doc.data())).toList();
+        return rooms;
+      }
     } catch (e) {
       rethrow;
     }
