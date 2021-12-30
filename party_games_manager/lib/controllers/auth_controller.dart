@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:party_games_manager/controllers/rooms_list_controller.dart';
 import 'package:party_games_manager/controllers/user_controller.dart';
 import 'package:party_games_manager/models/user_model.dart';
 import 'package:party_games_manager/screens/home_screen.dart';
@@ -26,24 +27,29 @@ class AuthController extends GetxController {
     if (user == null) {
       Get.offAll(() => const LoginScreen());
     } else {
-      Get.find<UserController>().user = await Database().getUser(user.uid);
+      if (user.isAnonymous) {
+        int? guestNumber = await Database().getGuestNumber();
+
+        UserModel _userModel = UserModel(
+          uid: user.uid,
+          email: "",
+          name: "Guest$guestNumber",
+        );
+
+        if (await Database().createNewUser(_userModel)) {
+          Get.find<UserController>().user = _userModel;
+        }
+      } else {
+        Get.find<UserController>().user = await Database().getUser(user.uid);
+      }
+      Get.find<RoomsListController>().roomsList = await Database().getRooms("");
       Get.offAll(() => const HomeScreen());
     }
   }
 
   Future<void> loginAnonymous() async {
     try {
-      UserCredential _authResult = await _auth.signInAnonymously();
-
-      UserModel _userModel = UserModel(
-        uid: _authResult.user!.uid,
-        email: "",
-        name: "",
-      );
-
-      if (await Database().createNewUser(_userModel)) {
-        Get.find<UserController>().user = _userModel;
-      }
+      await _auth.signInAnonymously();
     } catch (e) {
       Get.snackbar("About User", "User message",
           snackPosition: SnackPosition.BOTTOM,
@@ -88,18 +94,17 @@ class AuthController extends GetxController {
 
   void register(email, password, name) async {
     try {
-      final credential =
-          EmailAuthProvider.credential(email: email, password: password);
-
-      UserCredential _authResult =
-          await _auth.currentUser!.linkWithCredential(credential);
-      UserModel userModel = UserModel(
+      UserCredential _authResult = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      UserModel _userModel = UserModel(
         name: name,
         email: email,
         uid: _authResult.user!.uid,
       );
 
-      await Database().updateUser(_authResult.user!.uid, userModel);
+      if (await Database().createNewUser(_userModel)) {
+        Get.find<UserController>().user = _userModel;
+      }
     } catch (e) {
       Get.snackbar("Register User", "Register message",
           snackPosition: SnackPosition.BOTTOM,
@@ -109,7 +114,12 @@ class AuthController extends GetxController {
   }
 
   void logout() async {
-    await _auth.signOut();
+    if (_user.value!.isAnonymous) {
+      await Database().deleteUser(_user.value!.uid);
+      await _auth.currentUser!.delete();
+    } else {
+      await _auth.signOut();
+    }
   }
 
   User? getUser() {

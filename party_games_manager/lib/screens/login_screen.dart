@@ -183,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        Get.to(() => const RegisterScreen());
+                        Get.offAll(() => const RegisterScreen());
                       },
                   ),
                 ],
