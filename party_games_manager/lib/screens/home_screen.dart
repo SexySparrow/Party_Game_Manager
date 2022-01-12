@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:party_games_manager/screens/drawing_screen.dart';
 import 'package:party_games_manager/screens/login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -39,21 +40,43 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Center(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          color: Colors.amber.withOpacity(0.2),
-          child: _auth.currentUser!.isAnonymous
-              ? const Text(
-                  "I am a guest user",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18),
-                )
-              : const Text(
-                  "I am not a guest user",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18),
+        child: Column(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: MediaQuery.of(context).size.height * 0.8,
+              color: Colors.amber.withOpacity(0.2),
+              child: _auth.currentUser!.isAnonymous
+                  ? const Text(
+                      "I am a guest user",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 18),
+                    )
+                  : const Text(
+                      "I am not a guest user",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 18),
+                    ),
+            ),
+            MaterialButton(
+              color: Colors.blue,
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const DrawingScreen()));
+              },
+              padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+              minWidth: 300,
+              child: const Text(
+                "Draw",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
+              ),
+            ),
+          ],
         ),
       ),
     );
