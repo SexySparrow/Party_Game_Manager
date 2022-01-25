@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:party_games_manager/screens/drawing_screen.dart';
 import 'package:get/get.dart';
 import 'package:party_games_manager/controllers/auth_controller.dart';
 import 'package:party_games_manager/controllers/rooms_list_controller.dart';
@@ -184,6 +185,30 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ),
                                               ),
                                       ],
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(top: 20),
+                                      child: MaterialButton(
+                                        color: Colors.blue,
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const DrawingScreen()));
+                                        },
+                                        padding: const EdgeInsets.fromLTRB(
+                                            20, 15, 20, 15),
+                                        minWidth: 150,
+                                        child: const Text(
+                                          "Enter room",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
                                     )
                                   ],
                                 ),
