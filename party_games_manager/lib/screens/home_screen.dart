@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:party_games_manager/screens/drawing_screen.dart';
-import 'package:party_games_manager/screens/login_screen.dart';
 import 'package:get/get.dart';
 import 'package:party_games_manager/controllers/auth_controller.dart';
 import 'package:party_games_manager/controllers/rooms_list_controller.dart';
