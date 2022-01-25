@@ -25,7 +25,7 @@ class _DrawingScreenState extends State<DrawingScreen> {
               child: BlockPicker(
                 pickerColor: selectedColor,
                 onColorChanged: (color) {
-                  this.setState(() {
+                  setState(() {
                     selectedColor = color;
                   });
                 },
@@ -36,7 +36,7 @@ class _DrawingScreenState extends State<DrawingScreen> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text("Close"))
+                  child: const Text("Close"))
             ],
           );
         });
