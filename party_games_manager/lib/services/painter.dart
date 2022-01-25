@@ -20,10 +20,14 @@ class Painter extends CustomPainter {
     canvas.clipRect(rect);
 
     for (int i = 0; i < pointsList.length - 1; i++) {
-      if (pointsList[i].point.dx != -100 && pointsList[i + 1].point.dx != -100) {
-        canvas.drawLine(pointsList[i].point, pointsList[i + 1].point, pointsList[i].paint);
-      } else if (pointsList[i].point.dx != -100 && pointsList[i + 1].point.dx == -100) {
-        canvas.drawPoints(PointMode.points, [pointsList[i].point], pointsList[i].paint);
+      if (pointsList[i].point.dx != -100 &&
+          pointsList[i + 1].point.dx != -100) {
+        canvas.drawLine(
+            pointsList[i].point, pointsList[i + 1].point, pointsList[i].paint);
+      } else if (pointsList[i].point.dx != -100 &&
+          pointsList[i + 1].point.dx == -100) {
+        canvas.drawPoints(
+            PointMode.points, [pointsList[i].point], pointsList[i].paint);
       }
     }
   }

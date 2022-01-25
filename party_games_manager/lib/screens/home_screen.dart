@@ -74,7 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             child: Column(
               children: <Widget>[
-
                 Container(
                   padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                   child: TextField(
@@ -185,7 +184,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   color: Colors.black54,
                                                 ),
                                               ),
-
                                       ],
                                     ),
                                     Container(
@@ -193,10 +191,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: MaterialButton(
                                         color: Colors.blue,
                                         onPressed: () {
-                                          Navigator.of(context).push(MaterialPageRoute(
-                                              builder: (context) => const DrawingScreen()));
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const DrawingScreen()));
                                         },
-                                        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                                        padding: const EdgeInsets.fromLTRB(
+                                            20, 15, 20, 15),
                                         minWidth: 150,
                                         child: const Text(
                                           "Enter room",
