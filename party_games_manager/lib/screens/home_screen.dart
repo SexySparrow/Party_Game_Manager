@@ -76,24 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             child: Column(
               children: <Widget>[
-                MaterialButton(
-                  color: Colors.blue,
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const DrawingScreen()));
-                  },
-                  padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                  minWidth: 300,
-                  child: const Text(
-                    "Draw",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+
                 Container(
                   padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                   child: TextField(
@@ -204,7 +187,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   color: Colors.black54,
                                                 ),
                                               ),
+
                                       ],
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(top: 20),
+                                      child: MaterialButton(
+                                        color: Colors.blue,
+                                        onPressed: () {
+                                          Navigator.of(context).push(MaterialPageRoute(
+                                              builder: (context) => const DrawingScreen()));
+                                        },
+                                        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                                        minWidth: 150,
+                                        child: const Text(
+                                          "Enter room",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
                                     )
                                   ],
                                 ),

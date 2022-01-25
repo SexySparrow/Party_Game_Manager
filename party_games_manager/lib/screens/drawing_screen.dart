@@ -20,7 +20,7 @@ class _DrawingScreenState extends State<DrawingScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Color Chooser'),
+            title: const Text('Color Picker'),
             content: SingleChildScrollView(
               child: BlockPicker(
                 pickerColor: selectedColor,
@@ -79,7 +79,7 @@ class _DrawingScreenState extends State<DrawingScreen> {
                         pointsList.add(PointData(
                             paint: Paint()
                               ..color = selectedColor
-                              ..strokeWidth = 2
+                              ..strokeWidth = strokeWidth
                               ..strokeCap = StrokeCap.round,
                             point: details.localPosition));
                       });
@@ -89,7 +89,7 @@ class _DrawingScreenState extends State<DrawingScreen> {
                         pointsList.add(PointData(
                             paint: Paint()
                               ..color = selectedColor
-                              ..strokeWidth = 2
+                              ..strokeWidth = strokeWidth
                               ..strokeCap = StrokeCap.round,
                             point: details.localPosition));
                       });
@@ -99,7 +99,7 @@ class _DrawingScreenState extends State<DrawingScreen> {
                         pointsList.add(PointData(
                             paint: Paint()
                               ..color = selectedColor
-                              ..strokeWidth = 2
+                              ..strokeWidth = strokeWidth
                               ..strokeCap = StrokeCap.round,
                             point: const Offset(-100, -100)));
                       });
